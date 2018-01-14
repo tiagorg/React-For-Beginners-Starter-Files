@@ -4,6 +4,21 @@ import Order from './Order';
 import Inventory from './Inventory';
 
 class App extends React.Component {
+  state = {
+    veggies: {},
+    order: {}
+  };
+
+  addVeggie = veggie => {
+    const veggies = {...this.state.veggies};
+
+    const timestamp = Date.now();
+
+    veggies[`veggie-${timestamp}`] = veggie;
+
+    this.setState({ veggies });
+  }
+
   render() {
     return (
       <div className="catch-of-the-day">
@@ -11,7 +26,7 @@ class App extends React.Component {
           <Header tagline="Fresh Vegan Food Market" />
         </div>
         <Order />
-        <Inventory />
+        <Inventory addVeggie={ this.addVeggie }/>
       </div>
     );
   }
