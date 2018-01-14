@@ -16,17 +16,19 @@ class AddVeggieForm extends React.Component {
     this.form.reset();
   }
 
+  setRef = field => input => this[field] = input;
+
   render() {
     return (
-      <form ref={input => this.form = input} className="veggie-edit" onSubmit={this.createVeggie}>
-        <input ref={ input => this.name = input } type="text" placeholder="Veggie Name" />
-        <input ref={ input => this.price = input } type="text" placeholder="Veggie Price" />
-        <select ref={ input => this.status = input }>
+      <form ref={ this.setRef('form') } className="veggie-edit" onSubmit={this.createVeggie}>
+        <input ref={ this.setRef('name') } type="text" placeholder="Veggie Name" />
+        <input ref={ this.setRef('price') } type="text" placeholder="Veggie Price" />
+        <select ref={ this.setRef('status') }>
           <option value="available">Fresh!</option>
           <option value="unavailable">Sold Out!</option>
         </select>
-        <textarea ref={ input => this.desc = input } type="text" placeholder="Veggie Desc" />
-        <input ref={ input => this.image = input } type="text" placeholder="Veggie Image" />
+        <textarea ref={ this.setRef('desc') } type="text" placeholder="Veggie Desc" />
+        <input ref={ this.setRef('image') } type="text" placeholder="Veggie Image" />
         <button type="submit">+ Add Item</button>
       </form>
     );
