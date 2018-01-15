@@ -12,20 +12,26 @@ class App extends React.Component {
   };
 
   addVeggie = veggie => {
-    const veggies = {...this.state.veggies};
+    const veggies = { ...this.state.veggies };
 
     const timestamp = Date.now();
 
     veggies[`veggie-${timestamp}`] = veggie;
 
     this.setState({ veggies });
-  }
+  };
 
   loadSamples = () => {
     this.setState({
       veggies: sampleVeggies
-    })
-  }
+    });
+  };
+
+  addToOrder = key => {
+    const order = { ...this.state.order };
+    order[key] = order[key] + 1 || 1;
+    this.setState({ order });
+  };
 
   render() {
     return (
@@ -33,15 +39,18 @@ class App extends React.Component {
         <div className="menu">
           <Header tagline="Fresh Vegan Food Market" />
           <ul className="list-of-veggies">
-            {
-              Object
-                .entries(this.state.veggies)
-                .map(([key, details]) => <Veggie key={ key } details={ details } />)
-            }            
+            {Object.entries(this.state.veggies).map(([key, details]) => (
+              <Veggie
+                key={key}
+                index={key}
+                details={details}
+                addToOrder={this.addToOrder}
+              />
+            ))}
           </ul>
         </div>
         <Order />
-        <Inventory addVeggie={ this.addVeggie } loadSamples={ this.loadSamples }/>
+        <Inventory addVeggie={this.addVeggie} loadSamples={this.loadSamples} />
       </div>
     );
   }

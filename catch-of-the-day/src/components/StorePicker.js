@@ -6,16 +6,22 @@ class StorePicker extends React.Component {
     event.preventDefault();
     const storeId = this.storeInput.value;
     this.context.router.transitionTo(`/store/${storeId}`);
-  }
+  };
 
-  setRef = field => input => this[field] = input;
+  setRef = field => input => (this[field] = input);
 
   render() {
     return (
       <form className="store-selector" onSubmit={this.goToStore}>
-        { /* Hello */ }
+        {/* Hello */}
         <h2>Please Enter A Store</h2>
-        <input type="text" required placeholder="Store Name" defaultValue={getFunName()} ref={ this.setRef('storeInput') }/>
+        <input
+          type="text"
+          required
+          placeholder="Store Name"
+          defaultValue={getFunName()}
+          ref={this.setRef('storeInput')}
+        />
         <button type="submit">Visit Store</button>
       </form>
     );
