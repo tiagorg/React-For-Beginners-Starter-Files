@@ -4,12 +4,40 @@ import Order from './Order';
 import Inventory from './Inventory';
 import Veggie from './Veggie';
 import sampleVeggies from '../sample-veggies';
+import base from '../base';
 
 class App extends React.Component {
   state = {
     veggies: {},
     order: {}
   };
+
+  componentWillMount() {
+    this.ref = base.syncState(`${this.props.params.storeId}/veggies`, {
+      context: this,
+      state: 'veggies'
+    });
+
+    const localStorageRef = localStorage.getItem(
+      `order-${this.props.params.storeId}`
+    );
+    if (localStorageRef) {
+      this.setState({
+        order: JSON.parse(localStorageRef)
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem(
+      `order-${this.props.params.storeId}`,
+      JSON.stringify(nextState.order)
+    );
+  }
 
   addVeggie = veggie => {
     const veggies = { ...this.state.veggies };
@@ -49,7 +77,11 @@ class App extends React.Component {
             ))}
           </ul>
         </div>
-        <Order />
+        <Order
+          veggies={this.state.veggies}
+          order={this.state.order}
+          params={this.props.params}
+        />
         <Inventory addVeggie={this.addVeggie} loadSamples={this.loadSamples} />
       </div>
     );
