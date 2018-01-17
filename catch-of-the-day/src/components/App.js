@@ -49,6 +49,18 @@ class App extends React.Component {
     this.setState({ veggies });
   };
 
+  updateVeggie = (key, updatedVeggie) => {
+    const veggies = { ...this.state.veggies };
+    veggies[key] = updatedVeggie;
+    this.setState({ veggies });
+  };
+
+  removeVeggie = key => {
+    const veggies = { ...this.state.veggies };
+    veggies[key] = null;
+    this.setState({ veggies });
+  };
+
   loadSamples = () => {
     this.setState({
       veggies: sampleVeggies
@@ -58,6 +70,12 @@ class App extends React.Component {
   addToOrder = key => {
     const order = { ...this.state.order };
     order[key] = order[key] + 1 || 1;
+    this.setState({ order });
+  };
+
+  removeFromOrder = key => {
+    const order = { ...this.state.order };
+    delete order[key];
     this.setState({ order });
   };
 
@@ -78,14 +96,25 @@ class App extends React.Component {
           </ul>
         </div>
         <Order
+          removeFromOrder={this.removeFromOrder}
           veggies={this.state.veggies}
           order={this.state.order}
           params={this.props.params}
         />
-        <Inventory addVeggie={this.addVeggie} loadSamples={this.loadSamples} />
+        <Inventory
+          addVeggie={this.addVeggie}
+          updateVeggie={this.updateVeggie}
+          removeVeggie={this.removeVeggie}
+          loadSamples={this.loadSamples}
+          veggies={this.state.veggies}
+        />
       </div>
     );
   }
 }
+
+App.propTypes = {
+  params: React.PropTypes.object.isRequired
+};
 
 export default App;
