@@ -53,10 +53,10 @@ class AddVeggieForm extends React.Component {
       </form>
     );
   }
-}
 
-AddVeggieForm.propTypes = {
-  addVeggie: React.PropTypes.func.isRequired
-};
+  static propTypes = {
+    addVeggie: React.PropTypes.func.isRequired
+  };
+}
 
 export default AddVeggieForm;

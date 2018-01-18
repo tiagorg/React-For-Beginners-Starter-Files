@@ -52,12 +52,12 @@ class Order extends React.Component {
       </div>
     );
   }
-}
 
-Order.propTypes = {
-  veggies: React.PropTypes.object.isRequired,
-  order: React.PropTypes.object.isRequired,
-  removeFromOrder: React.PropTypes.func.isRequired
-};
+  static propTypes = {
+    veggies: React.PropTypes.object.isRequired,
+    order: React.PropTypes.object.isRequired,
+    removeFromOrder: React.PropTypes.func.isRequired
+  };
+}
 
 export default Order;
