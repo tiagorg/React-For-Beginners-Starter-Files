@@ -107,6 +107,7 @@ class App extends React.Component {
           removeVeggie={this.removeVeggie}
           loadSamples={this.loadSamples}
           veggies={this.state.veggies}
+          storeId={this.props.params.storeId}
         />
       </div>
     );
